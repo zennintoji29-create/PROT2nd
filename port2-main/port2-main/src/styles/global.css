@@ -2,24 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* ============================== */
+/* THEME VARIABLES */
+/* ============================== */
 :root {
---accent: 240 100% 60%; 
+  --accent: 240 100% 60%;
+  --glow: #00e1ff;
+  --bg-primary: #0c0f1b;
 }
-
 
 html.light { color-scheme: light; }
 html.dark { color-scheme: dark; }
 
-
-.container-card {
-@apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
+/* ============================== */
+/* GLOBAL RESET + TRANSITIONS */
+/* ============================== */
+* {
+  transition: background-color .25s ease, 
+              color .25s ease,
+              border-color .25s ease,
+              transform .25s ease;
+}
 
+/* ============================== */
+/* CARD DESIGN */
+/* ============================== */
+.container-card {
+  @apply bg-white/10 backdrop-blur-md dark:bg-gray-800/40 border border-white/20 dark:border-gray-700/40 rounded-2xl p-6 shadow-lg;
+}
 
-* { transition: background-color 200ms linear, color 200ms linear; }
+/* ============================== */
+/* FOCUS ACCESSIBILITY */
+/* ============================== */
+:focus { 
+  outline: 3px solid rgba(0, 247, 255, 0.5); 
+  outline-offset: 3px; 
+}
 
+/* ============================== */
+/* CURSOR GLOW FOLLOW EFFECT */
+/* ============================== */
+body {
+  background: var(--bg-primary);
+}
 
-/* Accessible focus */
-:focus { outline: 3px solid rgba(99,102,241,0.2); outline-offset: 2px; }
+body::before {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow)20%, transparent 70%);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  transition: transform .15s ease-out;
+}
+
+body:hover::before {
+  opacity: 0.25;
+}
+
+@media(pointer: fine) {
+  body {
+    cursor: none;
+  }
+  body::before {
+    animation: move-glow 5s infinite alternate;
+  }
+}
+
+@keyframes move-glow {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: .15; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: .25; }
+}
+
+/* ============================== */
+/* HOVER GLOW UTIL CLASS */
+/* ============================== */
+.glow-hover:hover {
+  box-shadow: 0 0 15px var(--glow), 
+              0 0 40px var(--glow);
+  transform: translateY(-3px);
+}
+
+/* ============================== */
+/* ANIMATED GRADIENT BORDER */
+/* ============================== */
+.gradient-border {
+  position: relative;
+  border-radius: 18px;
+  padding: 3px;
+  background: linear-gradient(120deg, #00eaff, #7c3aed, #00eaff);
+  background-size: 400%;
+  animation: borderMove 6s infinite alternate;
+}
+
+.gradient-border > * {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+@keyframes borderMove {
+  0% { background-position: 0%; }
+  100% { background-position: 100%; }
+}
+
+/* ============================== */
+/* TEXT EFFECT */
+/* ============================== */
+.neon-text {
+  text-shadow: 0 0 10px var(--glow),
+               0 0 20px var(--glow),
+               0 0 40px var(--glow);
+}
+
