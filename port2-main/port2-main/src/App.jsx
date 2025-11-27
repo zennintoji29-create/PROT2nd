@@ -1,98 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Projects from "./components/Projects";
-import Achievements from "./components/Achievements";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import React, { useEffect, useState } from "react";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Fake loader time
+  // Fake loading animation
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
+    setTimeout(() => setLoading(false), 2000);
   }, []);
 
-  // Mouse move parallax effect
-  const handleMouseMove = (e) => {
-    setMousePos({
-      x: (e.clientX / window.innerWidth - 0.5) * 40,
-      y: (e.clientY / window.innerHeight - 0.5) * 40,
-    });
-  };
-
-  // Scroll progress indicator
+  // Parallax mouse movement
   useEffect(() => {
-    const handleScroll = () => {
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress((window.scrollY / height) * 100);
+    const handleMove = (e) => {
+      const x = (window.innerWidth - e.pageX * 2) / 100;
+      const y = (window.innerHeight - e.pageY * 2) / 100;
+      document.documentElement.style.setProperty("--move-x", `${x}px`);
+      document.documentElement.style.setProperty("--move-y", `${y}px`);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
   }, []);
 
-  if (loading) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="h-screen flex items-center justify-center bg-black text-white text-3xl font-bold tracking-wider"
-      >
-        Loading...
-      </motion.div>
-    );
-  }
+  if (loading) return (
+    <div className="h-screen flex items-center justify-center bg-black text-white text-3xl animate-pulse">
+      🚀 Loading Portfolio...
+    </div>
+  );
 
   return (
-    <div
-      className="relative min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-100 overflow-x-hidden transition-all duration-500"
-      onMouseMove={handleMouseMove}
-    >
+    <div className="relative overflow-hidden min-h-screen bg-gray-900 text-white font-sans">
+      
+      {/* Particle Background */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-30"></div>
 
-      {/* 🔥 Scroll Progress Bar */}
-      <div
-        className="fixed top-0 left-0 h-[5px] bg-purple-500 z-[999]"
-        style={{ width: `${scrollProgress}%` }}
-      ></div>
+      {/* Animated Neon Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 opacity-20 blur-3xl animate-gradient"></div>
 
-      {/* 🔥 Mouse Parallax Glow */}
-      <motion.div
-        className="pointer-events-none fixed w-60 h-60 rounded-full bg-purple-500/30 blur-3xl -z-10"
-        animate={{ x: mousePos.x, y: mousePos.y }}
-        transition={{ type: "spring", stiffness: 90, damping: 20 }}
-      />
+      {/* Floating Icons */}
+      <div className="floating absolute top-20 left-10 text-6xl opacity-40">⚡</div>
+      <div className="floating absolute bottom-20 right-10 text-6xl opacity-40">🔥</div>
 
-      {/* 🔥 Neon Animated Background Gradient */}
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(131,58,180,0.2),transparent),radial-gradient(circle_at_bottom_right,rgba(255,0,110,0.25),transparent)] -z-20 animate-pulse" />
+      {/* Scroll progress bar */}
+      <div id="scrollBar" className="fixed top-0 left-0 h-[4px] bg-cyan-400"></div>
 
-      {/* 🔥 Floating Social Icons */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
-        <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 hover:bg-purple-600 transition scale-90 hover:scale-100 shadow-lg">💬</a>
-        <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 hover:bg-pink-600 transition scale-90 hover:scale-100 shadow-lg">📧</a>
-        <a href="#" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition scale-90 hover:scale-100 shadow-lg">🔗</a>
-      </div>
-
-      {/* MAIN CONTENT */}
-      <motion.main
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="max-w-6xl mx-auto px-6 md:px-8"
-      >
-        <Header />
-        <Hero />
-        <About />
-        <Projects />
-        <Achievements />
-        <Contact />
-        <Footer />
-      </motion.main>
+      {/* Hero Section */}
+      <section className="relative z-10 h-screen flex flex-col items-center justify-center text-center"
+        style={{
+          transform: `translate(var(--move-x), var(--move-y))`,
+          transition: "transform 0.1s ease-out",
+        }}>
+        <h1 className="text-6xl font-extrabold neon-text">🚀 SUBHANSHU</h1>
+        <p className="mt-4 text-xl opacity-80">Full Stack Developer | UI Lover | React + Tailwind</p>
+        <button className="mt-8 px-6 py-3 bg-white text-black font-bold rounded-lg hover:scale-110 transition">
+          Explore Portfolio
+        </button>
+      </section>
     </div>
   );
 }
