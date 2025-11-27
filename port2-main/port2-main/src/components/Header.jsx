@@ -24,7 +24,8 @@ export default function Header() {
         {/* LOGO */}
         <motion.div whileHover={{ scale: 1.1 }} className="flex items-center gap-3 cursor-pointer">
      <img
-  src="/logo.png"
+  src="/assests/logo.png
+"
   alt="Logo"
   className="h-16 w-auto transition-transform duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]"
 />
