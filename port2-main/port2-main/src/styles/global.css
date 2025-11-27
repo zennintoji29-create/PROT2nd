@@ -17,110 +17,129 @@ html.dark { color-scheme: dark; }
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  cursor: default;
 }
 
 /* ============================== */
-/* GLOBAL RESET + TRANSITIONS */
+/* GLOBAL RESET + SMOOTH UI */
 /* ============================== */
 * {
-  transition: background-color .25s ease, 
-              color .25s ease,
-              border-color .25s ease,
-              transform .25s ease;
+  transition: 
+    background-color .25s ease,
+    color .25s ease,
+    border-color .25s ease,
+    transform .2s ease;
 }
 
 /* ============================== */
-/* CARD DESIGN */
+/* UI CARDS */
 /* ============================== */
 .container-card {
-  @apply bg-white/10 backdrop-blur-md dark:bg-gray-800/40 border border-white/20 dark:border-gray-700/40 rounded-2xl p-6 shadow-lg;
+  @apply bg-white/10 backdrop-blur-lg border border-white/20 
+         dark:bg-gray-800/30 dark:border-gray-700/40 
+         rounded-2xl p-6 shadow-lg;
 }
 
 /* ============================== */
-/* FOCUS ACCESSIBILITY */
+/* ACCESSIBILITY */
 /* ============================== */
 :focus { 
-  outline: 3px solid rgba(0, 247, 255, 0.5); 
-  outline-offset: 3px; 
+  outline: 3px solid rgba(0, 247, 255, 0.55);
+  outline-offset: 4px; 
 }
 
 /* ============================== */
-/* CURSOR GLOW FOLLOW EFFECT */
+/* INTERACTIVE GLOW CURSOR FOLLOW */
 /* ============================== */
+
 body {
   background: var(--bg-primary);
+  overflow-x: hidden;
 }
 
-body::before {
-  content: '';
+/* Glow cursor (fixed, doesn't block clicks) */
+.cursor-glow {
   position: fixed;
-  width: 350px;
-  height: 350px;
-  pointer-events: none;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--glow);
   border-radius: 50%;
-  background: radial-gradient(circle, var(--glow)20%, transparent 70%);
-  opacity: 0.15;
-  mix-blend-mode: screen;
+  pointer-events: none;
+  mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: transform .15s ease-out;
+  transition: width .15s, height .15s, background .15s;
+  z-index: 9999;
 }
 
-body:hover::before {
-  opacity: 0.25;
+/* Expand when hovering interactives */
+a:hover ~ .cursor-glow,
+button:hover ~ .cursor-glow,
+.glow-hover:hover ~ .cursor-glow {
+  width: 40px;
+  height: 40px;
+  background: var(--glow);
+  opacity: .3;
 }
 
-@media(pointer: fine) {
-  body {
-    cursor: none;
-  }
-  body::before {
-    animation: move-glow 5s infinite alternate;
-  }
+/* ============================== */
+/* BACKGROUND GLOW ORB */
+/* ============================== */
+
+.bg-glow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--glow) 10%, transparent 60%);
+  filter: blur(60px);
+  opacity: 0.2;
+  transform: translate(-50%, -50%);
+  animation: floatGlow 6s ease-in-out infinite alternate;
+  z-index: -1;
 }
 
-@keyframes move-glow {
+@keyframes floatGlow {
   0% { transform: translate(-50%, -50%) scale(1); opacity: .15; }
-  100% { transform: translate(-50%, -50%) scale(1.4); opacity: .25; }
+  100% { transform: translate(-50%, -45%) scale(1.25); opacity: .25; }
 }
 
 /* ============================== */
-/* HOVER GLOW UTIL CLASS */
+/* UI SPECIAL EFFECTS */
 /* ============================== */
+
 .glow-hover:hover {
-  box-shadow: 0 0 15px var(--glow), 
-              0 0 40px var(--glow);
-  transform: translateY(-3px);
+  box-shadow: 0 0 20px var(--glow), 0 0 60px var(--glow);
+  transform: translateY(-4px);
 }
 
-/* ============================== */
-/* ANIMATED GRADIENT BORDER */
-/* ============================== */
+/* Animated border */
 .gradient-border {
   position: relative;
-  border-radius: 18px;
   padding: 3px;
+  border-radius: 22px;
   background: linear-gradient(120deg, #00eaff, #7c3aed, #00eaff);
-  background-size: 400%;
-  animation: borderMove 6s infinite alternate;
+  background-size: 300%;
+  animation: borderShift 5s infinite alternate ease-in-out;
 }
 
 .gradient-border > * {
   background: var(--bg-primary);
-  border-radius: 16px;
-  padding: 20px;
+  padding: 22px;
+  border-radius: 18px;
 }
 
-@keyframes borderMove {
+@keyframes borderShift {
   0% { background-position: 0%; }
   100% { background-position: 100%; }
 }
 
-/* ============================== */
-/* TEXT EFFECT */
-/* ============================== */
+/* Neon text */
 .neon-text {
-  text-shadow: 0 0 10px var(--glow),
-               0 0 20px var(--glow),
-               0 0 40px var(--glow);
+  color: #00eaff;
+  text-shadow: 
+    0 0 10px var(--glow),
+    0 0 20px var(--glow),
+    0 0 40px var(--glow);
 }
-
