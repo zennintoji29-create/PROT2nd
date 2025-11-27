@@ -2,71 +2,67 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { SITE } from '../config'
 
-
-
 export default function Header() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
 
   useEffect(() => {
     const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-      root.classList.remove('light')
-    } else {
-      root.classList.add('light')
-      root.classList.remove('dark')
-    }
+    if (theme === 'dark') root.classList.add('dark')
+    else root.classList.remove('dark')
     localStorage.setItem('theme', theme)
   }, [theme])
 
   return (
-    <header className="py-6">
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="py-6 sticky top-0 z-50 backdrop-blur-xl border-b border-white/10"
+    >
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-0">
         
-        {/* LOGO + NAME */}
-        <div className="flex items-center gap-3">
-
-          {/* Logo with hover animation */}
- <motion.img
-  src="/assests/logo.png"  // <- match your folder name
-  alt="Logo"
-  className="w-10 h-10 rounded-lg object-cover"
-  whileHover={{ scale: 1.08, rotate: 1 }}
-  transition={{ type: "spring", stiffness: 200 }}
-/>
-
-
+        {/* LOGO */}
+        <motion.div whileHover={{ scale: 1.1 }} className="flex items-center gap-3 cursor-pointer">
+          <img src="/assets/logo.png" className="w-10 h-10 rounded-xl shadow-lg" />
           <div>
-            <div className="font-semibold">{SITE.name}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">{SITE.title}</div>
+            <div className="font-semibold tracking-wide text-white">{SITE.name}</div>
+            <div className="text-xs text-gray-400">{SITE.title}</div>
           </div>
+        </motion.div>
 
-        </div>
+        {/* NAV */}
+        <nav className="flex items-center gap-6 text-sm">
+          {["projects", "skills", "contact"].map((item) => (
+            <motion.a
+              key={item}
+              href={`#${item}`}
+              whileHover={{ scale: 1.1 }}
+              className="hover:text-purple-400 transition"
+            >
+              {item.charAt(0).toUpperCase() + item.slice(1)}
+            </motion.a>
+          ))}
 
-        {/* NAVIGATION */}
-        <nav className="flex items-center gap-4">
-          <a href="#projects" className="text-sm hover:underline">Projects</a>
-          <a href="#skills" className="text-sm hover:underline">Skills</a>
-          <a href="#contact" className="text-sm hover:underline">Contact</a>
-
+          {/* THEME BUTTON */}
           <motion.button
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="ml-2 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
-            aria-label="Toggle dark mode"
+            className="p-2 rounded-lg bg-black/20 hover:bg-black/40 border border-white/10"
           >
-            {theme === 'dark' ? '🌙' : '☀️'}
+            {theme === 'dark' ? "🌙" : "☀️"}
           </motion.button>
 
-          <a
+          {/* RESUME BUTTON */}
+          <motion.a
+            whileHover={{ scale: 1.05 }}
             href={SITE.resume}
             download
-            className="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm shadow-sm hover:bg-indigo-500"
+            className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg hover:opacity-90"
           >
             Resume
-          </a>
+          </motion.a>
         </nav>
       </div>
-    </header>
+    </motion.header>
   )
 }
