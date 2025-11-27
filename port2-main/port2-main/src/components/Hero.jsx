@@ -43,12 +43,13 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25 }}
           >
-            <a
-              href="#projects"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.07] transition-all"
-            >
-              🚀 Explore Portfolio
-            </a>
+          <a
+  href="#projects"
+  className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-indigo-500/50 hover:scale-[1.07] transition-all"
+>
+  🚀 Explore Portfolio
+</a>
+
 
             <motion.a
               href={SITE.links.github}
