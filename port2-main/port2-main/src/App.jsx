@@ -28,7 +28,7 @@ export default function App() {
 
 return (
   <div className="relative overflow-hidden min-h-screen bg-gray-900 text-white font-sans">
-    
+
     {/* Background & FX */}
     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-30"></div>
     <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-500 opacity-20 blur-3xl animate-gradient"></div>
@@ -40,7 +40,12 @@ return (
     <section id="projects" className="h-screen flex items-center justify-center text-4xl">
       📁 PROJECTS COMING SOON
     </section>
+
+    {/* ⭐ REQUIRED: Custom Cursor Element */}
+    <div className="cursor-glow"></div>
+
   </div>
 );
+
 
 }
