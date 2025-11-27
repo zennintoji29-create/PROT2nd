@@ -23,7 +23,12 @@ export default function Header() {
         
         {/* LOGO */}
         <motion.div whileHover={{ scale: 1.1 }} className="flex items-center gap-3 cursor-pointer">
-          <img src="/assets/logo.png" className="w-10 h-10 rounded-xl shadow-lg" />
+     <img
+  src="/logo.png"
+  alt="Logo"
+  className="h-16 w-auto transition-transform duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]"
+/>
+
           <div>
             <div className="font-semibold tracking-wide text-white">{SITE.name}</div>
             <div className="text-xs text-gray-400">{SITE.title}</div>
