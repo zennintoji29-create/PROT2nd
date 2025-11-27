@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+--accent: 240 100% 60%; 
+}
+
+
+html.light { color-scheme: light; }
+html.dark { color-scheme: dark; }
+
+
+.container-card {
+@apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm;
+}
+
+
+
+* { transition: background-color 200ms linear, color 200ms linear; }
+
+
+/* Accessible focus */
+:focus { outline: 3px solid rgba(99,102,241,0.2); outline-offset: 2px; }
