@@ -8,126 +8,119 @@
 :root {
   --accent: 240 100% 60%;
   --glow: #00e1ff;
-  --bg-primary: #0c0f1b;
+  --bg-primary: #080c16;
 }
 
+/* Light/Dark mode meta */
 html.light { color-scheme: light; }
 html.dark { color-scheme: dark; }
 
-/* Smooth scrolling */
+/* Smooth scrolling + default cursor (JS takes over custom cursor) */
 html {
   scroll-behavior: smooth;
   cursor: default;
 }
 
 /* ============================== */
-/* GLOBAL RESET + SMOOTH UI */
+/* UI + TRANSITIONS */
 /* ============================== */
 * {
-  transition: 
+  transition:
     background-color .25s ease,
     color .25s ease,
     border-color .25s ease,
-    transform .2s ease;
+    transform .22s ease;
 }
 
 /* ============================== */
 /* UI CARDS */
 /* ============================== */
 .container-card {
-  @apply bg-white/10 backdrop-blur-lg border border-white/20 
+  @apply bg-white/10 backdrop-blur-lg border border-white/15 
          dark:bg-gray-800/30 dark:border-gray-700/40 
          rounded-2xl p-6 shadow-lg;
 }
 
 /* ============================== */
-/* ACCESSIBILITY */
+/* FOCUS RING */
 /* ============================== */
-:focus { 
+:focus {
   outline: 3px solid rgba(0, 247, 255, 0.55);
-  outline-offset: 4px; 
+  outline-offset: 5px;
 }
 
 /* ============================== */
-/* INTERACTIVE GLOW CURSOR FOLLOW */
+/* CUSTOM INTERACTIVE CURSOR */
 /* ============================== */
 
-body {
-  background: var(--bg-primary);
-  overflow-x: hidden;
-}
-
-/* Glow cursor (fixed, doesn't block clicks) */
+/* Cursor base */
 .cursor-glow {
   position: fixed;
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
   border: 2px solid var(--glow);
   border-radius: 50%;
   pointer-events: none;
-  mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: width .15s, height .15s, background .15s;
-  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width .2s ease, height .2s ease, background .25s ease;
+  z-index: 999999;
 }
 
-/* Expand when hovering interactives */
-a:hover ~ .cursor-glow,
-button:hover ~ .cursor-glow,
-.glow-hover:hover ~ .cursor-glow {
+/* Hovered elements expand glow cursor smoothly */
+.interactive-hover:hover ~ .cursor-glow {
   width: 40px;
   height: 40px;
   background: var(--glow);
-  opacity: .3;
+  opacity: .35;
 }
 
 /* ============================== */
-/* BACKGROUND GLOW ORB */
+/* BACKGROUND SOFT GLOW */
 /* ============================== */
-
 .bg-glow {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 400px;
-  height: 400px;
+  width: 380px;
+  height: 380px;
   pointer-events: none;
-  background: radial-gradient(circle, var(--glow) 10%, transparent 60%);
-  filter: blur(60px);
-  opacity: 0.2;
+  background: radial-gradient(circle, var(--glow) 10%, transparent 65%);
+  filter: blur(80px);
+  opacity: .22;
   transform: translate(-50%, -50%);
-  animation: floatGlow 6s ease-in-out infinite alternate;
+  animation: floatGlow 8s ease-in-out infinite alternate;
   z-index: -1;
 }
 
 @keyframes floatGlow {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: .15; }
-  100% { transform: translate(-50%, -45%) scale(1.25); opacity: .25; }
+  0% { transform: translate(-50%, -52%) scale(1); opacity: .15; }
+  100% { transform: translate(-50%, -45%) scale(1.25); opacity: .27; }
 }
 
 /* ============================== */
-/* UI SPECIAL EFFECTS */
+/* SPECIAL UI EFFECTS */
 /* ============================== */
 
 .glow-hover:hover {
-  box-shadow: 0 0 20px var(--glow), 0 0 60px var(--glow);
-  transform: translateY(-4px);
+  box-shadow: 0 0 18px var(--glow), 0 0 55px var(--glow);
+  transform: translateY(-5px);
 }
 
-/* Animated border */
+/* Animated border (premium effect) */
 .gradient-border {
   position: relative;
-  padding: 3px;
+  padding: 4px;
   border-radius: 22px;
-  background: linear-gradient(120deg, #00eaff, #7c3aed, #00eaff);
-  background-size: 300%;
-  animation: borderShift 5s infinite alternate ease-in-out;
+  background: linear-gradient(130deg, #00eaff, #7c3aed, #00eaff);
+  background-size: 350%;
+  animation: borderShift 5.5s infinite alternate ease-in-out;
 }
 
 .gradient-border > * {
   background: var(--bg-primary);
-  padding: 22px;
   border-radius: 18px;
+  padding: 22px;
 }
 
 @keyframes borderShift {
@@ -135,11 +128,11 @@ button:hover ~ .cursor-glow,
   100% { background-position: 100%; }
 }
 
-/* Neon text */
+/* Neon glow text */
 .neon-text {
-  color: #00eaff;
-  text-shadow: 
+  color: var(--glow);
+  text-shadow:
     0 0 10px var(--glow),
-    0 0 20px var(--glow),
+    0 0 25px var(--glow),
     0 0 40px var(--glow);
 }
